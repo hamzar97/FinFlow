@@ -5,6 +5,7 @@ import com.paynexis.authservice.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.http.HttpResponse;
 import java.util.List;
 
 @RestController
@@ -22,5 +23,15 @@ public class UserController {
     @PostMapping
     public User create(@RequestBody User user) {
         return userService.create(user);
+    }
+    @PutMapping(path = "/{RequestParameter}")
+    public User update(@RequestBody User user, @PathVariable String RequestParameter) {
+        user.setId(RequestParameter);
+        return userService.update(user);
+    }
+
+    @DeleteMapping(path = "/{RequestParameter}")
+    public void delete(@PathVariable String RequestParameter) {
+        userService.delete(userService.getUserById(RequestParameter));
     }
 }
