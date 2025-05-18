@@ -1,11 +1,15 @@
 package com.paynexis.authservice.model;
 
 import com.paynexis.authservice.enums.UserRole;
+import jakarta.annotation.Generated;
 import lombok.Data;
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.Date;
+import java.time.LocalDateTime;
+
 
 @Document (collection = "Users")
 @Data
@@ -20,7 +24,9 @@ public class User {
     private String email;
     private String phone;
     private UserRole role;
-    private Date createdAt;
-    private Date updatedAt;
+    @CreatedDate
+    private LocalDateTime createdAt;
+    @LastModifiedDate
+    private LocalDateTime updatedAt;
 
 }
