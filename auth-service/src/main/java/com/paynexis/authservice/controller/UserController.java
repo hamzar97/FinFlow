@@ -1,11 +1,13 @@
 package com.paynexis.authservice.controller;
 
+import com.paynexis.authservice.dto.LoginCredentials;
 import com.paynexis.authservice.model.User;
 import com.paynexis.authservice.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.http.HttpResponse;
 import java.util.List;
 
 @RestController
@@ -16,22 +18,28 @@ public class UserController {
     private UserService userService;
 
     @GetMapping
-    public List<User> getAllUser() {
-        return userService.getAllUsers();
+    public ResponseEntity<List<User>> getAllUser() {
+        return new ResponseEntity<>(userService.getAllUsers(), HttpStatus.OK);
     }
 
     @PostMapping
-    public User create(@RequestBody User user) {
-        return userService.create(user);
+    public ResponseEntity<User> create(@RequestBody User user) {
+        return new ResponseEntity<>(userService.create(user), HttpStatus.CREATED);
     }
-    @PutMapping(path = "/{RequestParameter}")
-    public User update(@RequestBody User user, @PathVariable String RequestParameter) {
-        user.setId(RequestParameter);
-        return userService.update(user);
+    @PutMapping(path = "/{userId}")
+    public ResponseEntity<User> update(@RequestBody User user, @PathVariable String userId) {
+        user.setId(userId);
+        return new ResponseEntity<>(userService.update(user), HttpStatus.OK);
     }
 
-    @DeleteMapping(path = "/{RequestParameter}")
-    public void delete(@PathVariable String RequestParameter) {
-        userService.delete(userService.getUserById(RequestParameter));
+    @PostMapping(path = "/login")
+    public ResponseEntity<User> login(@RequestBody LoginCredentials loginCredentials) {
+        return userService.login(loginCredentials);
+    }
+
+    @DeleteMapping(path = "/{userId}")
+    public ResponseEntity delete(@PathVariable String userId) {
+        userService.delete(userId);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
