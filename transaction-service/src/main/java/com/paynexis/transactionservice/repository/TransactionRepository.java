@@ -6,5 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface TransactionRepository extends MongoRepository<Transaction, String> {
+    Transaction findByUserId(String userId);
 
 }

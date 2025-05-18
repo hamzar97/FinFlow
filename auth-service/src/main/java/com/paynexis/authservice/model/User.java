@@ -1,7 +1,6 @@
 package com.paynexis.authservice.model;
 
 import com.paynexis.authservice.enums.UserRole;
-import jakarta.annotation.Generated;
 import lombok.Data;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
